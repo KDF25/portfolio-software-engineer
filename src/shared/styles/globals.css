@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./variables.css";
+@import "./theme.css";
+@import "./utilities.css";
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+
+	html {
+		@apply scroll-smooth;
+		scroll-padding-top: var(--spacing-header);
+	}
+
+	body {
+		@apply bg-background text-foreground font-sans;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			@apply scroll-auto;
+		}
+	}
+}

@@ -1,0 +1,93 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+	--background: #edf1f7;
+	--foreground: #0d1218;
+	--card: #f7f9fc;
+	--card-foreground: #0d1218;
+	--popover: #f7f9fc;
+	--popover-foreground: #0d1218;
+	--primary: #0d1218;
+	--primary-foreground: #edf1f7;
+	--secondary: #e3e8f0;
+	--secondary-foreground: #0d1218;
+	--muted: #e3e8f0;
+	--muted-foreground: #53606d;
+	--accent: #dde3ec;
+	--accent-foreground: #0d1218;
+	--destructive: #c4285a;
+	--destructive-foreground: #ffffff;
+	--border: #d3dae4;
+	--input: #d3dae4;
+	--ring: #53606d;
+	--radius: 0.625rem;
+
+	/* Вторичный текст: светлее основного, темнее muted */
+	--soft: #26303b;
+	/* Путь системы и рост метрик */
+	--success: #0d7a4e;
+	--success-soft: #d6f3e4;
+	/* Отказ и падение метрик */
+	--danger: #c4285a;
+	--danger-soft: #fde4ec;
+}
+
+.dark {
+	--background: #09090b;
+	--foreground: #f2f2ef;
+	--card: #0e0e11;
+	--card-foreground: #f2f2ef;
+	--popover: #0e0e11;
+	--popover-foreground: #f2f2ef;
+	--primary: #f2f2ef;
+	--primary-foreground: #09090b;
+	--secondary: #18181b;
+	--secondary-foreground: #f2f2ef;
+	--muted: #18181b;
+	--muted-foreground: #9aa0a5;
+	--accent: #1f1f23;
+	--accent-foreground: #f2f2ef;
+	--destructive: #ff6f93;
+	--destructive-foreground: #09090b;
+	--border: #27272a;
+	--input: #27272a;
+	--ring: #9aa0a5;
+
+	--soft: #d3d5d7;
+	--success: #8ff0c0;
+	--success-soft: #12201a;
+	--danger: #ff6f93;
+	--danger-soft: #241219;
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-soft: var(--soft);
+	--color-success: var(--success);
+	--color-success-soft: var(--success-soft);
+	--color-danger: var(--danger);
+	--color-danger-soft: var(--danger-soft);
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+	--radius-2xl: calc(var(--radius) + 8px);
+}

@@ -1,0 +1,524 @@
+{
+	"hero": {
+		"name": "Damir Karimov",
+		"title": "Software engineer for the parts that can’t go <accent>wrong twice.</accent>",
+		"scroll": "How I think about it",
+		"photo_alt": "Damir Karimov, black-and-white portrait in a dark suit",
+		"ticker_label": "Examples of failures my systems handle",
+		"ticker": {
+			"payout": {
+				"event": "node timeout",
+				"fix": "same signed tx re-sent, 1 payout"
+			},
+			"claim": {
+				"event": "2 couriers, 1 order",
+				"fix": "conditional write, 1 winner"
+			},
+			"agent": {
+				"event": "confidence 0.41",
+				"fix": "hand-off to a person"
+			},
+			"crash": {
+				"event": "crash mid-send",
+				"fix": "reconciler finishes the job"
+			},
+			"stale": {
+				"event": "stale screen",
+				"fix": "taken order removed over WebSocket"
+			},
+			"prompt": {
+				"event": "prompt changed",
+				"fix": "eval set catches the regression"
+			}
+		}
+	},
+	"stance": {
+		"role": "Senior Software Engineer <muted>— distributed systems, payments, AI agents</muted>",
+		"badges": {
+			"timezone": "UTC+5",
+			"agents": "AI agents in production",
+			"payments": "Payments and money flows",
+			"harness": "Harness engineering",
+			"ownership": "End-to-end ownership"
+		},
+		"lede": "I design from the failure path first — before the happy path is fast, I want to know what the system does when:",
+		"modes": {
+			"network": {
+				"title": "The network doesn’t answer",
+				"text": "Did the payment leave? A retry must never pay twice.",
+				"link": "→ exactly-once payouts"
+			},
+			"race": {
+				"title": "Two requests arrive at once",
+				"text": "Check-then-write leaves a gap. Only one of them may win.",
+				"link": "→ one order, one courier"
+			},
+			"model": {
+				"title": "A model isn’t sure",
+				"text": "Confident and wrong is the expensive case. Below the threshold, a person answers.",
+				"link": "→ voice agent hand-off"
+			}
+		},
+		"cta": {
+			"contact": "Get in touch",
+			"capabilities": "What I build"
+		}
+	},
+	"capabilities": {
+		"title": "What I build",
+		"note": "Production systems end to end — from the transaction to the screen.",
+		"items": {
+			"ai": {
+				"title": "AI agents and RAG",
+				"text": "Voice and chat agents grounded in the product’s own data: retrieval per client, output checked against a schema, a confidence threshold and a human hand-off. Plus MCP servers that put a platform inside clients’ own AI tools."
+			},
+			"backend": {
+				"title": "Distributed backends",
+				"text": "Services that stay consistent under concurrency: transactions, idempotency, queues, retries and reconciliation."
+			},
+			"payments": {
+				"title": "Payments and money flows",
+				"text": "Wallets, deposits, payouts and e‑signatures — where a duplicate costs money."
+			},
+			"realtime": {
+				"title": "Real-time systems",
+				"text": "Live balances, statuses and dashboards that don’t drift from the source of truth."
+			},
+			"automation": {
+				"title": "Automation and integrations",
+				"text": "Anything people repeat becomes a pipeline: browser automation, document workflows, scheduled jobs, bots and third-party APIs."
+			},
+			"frontend": {
+				"title": "Frontend and mobile",
+				"text": "Microfrontends, SSR, design systems and React Native apps for large products."
+			},
+			"admin": {
+				"title": "Admin and operations",
+				"text": "Moderation, financial operations, RBAC and analytics for internal teams."
+			}
+		},
+		"flow": {
+			"label": "Agent flow",
+			"speech": "speech",
+			"retrieval": "RAG",
+			"model": "LLM",
+			"schema": "schema",
+			"confirm": "client confirms",
+			"fallback_label": "Fallback",
+			"low": "low confidence",
+			"human": "person takes over"
+		}
+	},
+	"cases": {
+		"counter": "Case {current} of {total}",
+		"steps": {
+			"situation": "Situation",
+			"task": "Task",
+			"action": "Action",
+			"result": "Result"
+		},
+		"diagram": {
+			"normal": "Normal path",
+			"failure": "Under failure",
+			"kicker": "sequence"
+		},
+		"note": "Diagrams are simplified; confidence values are illustrative.",
+		"payouts": {
+			"stack": "Python · asyncio · PostgreSQL",
+			"title": "Paying out exactly once over a network that may not answer",
+			"metric": "1000+",
+			"metric_label": "concurrent workers, no second transaction on retry",
+			"situation": "Financial infrastructure was the most critical part of a crypto platform. Four ways it could lose money:",
+			"risks": {
+				"timeout": {
+					"cause": "A node doesn’t answer",
+					"effect": "a retry may pay twice"
+				},
+				"order": {
+					"cause": "EVM nonce order is strict",
+					"effect": "one gap stalls every later tx"
+				},
+				"race": {
+					"cause": "Many operations at once",
+					"effect": "two workers take one nonce"
+				},
+				"crash": {
+					"cause": "Crash between send and write",
+					"effect": "operation state is lost"
+				}
+			},
+			"tasks": {
+				"parallel": "Many operations in parallel",
+				"duplicates": "No duplicates on retry",
+				"order": "Strict nonce order",
+				"resume": "Resume after a crash"
+			},
+			"actions": {
+				"sequential": {
+					"title": "Sequential processing",
+					"note": "kept order, but one stuck tx blocked the queue"
+				},
+				"memory": {
+					"title": "Nonce counter in memory",
+					"note": "lost on restart, broke with several instances"
+				},
+				"transaction": {
+					"title": "Nonce and signing in one DB transaction",
+					"note": "if signing fails, the nonce rolls back — no gap"
+				},
+				"resend": {
+					"title": "Store the signed tx before sending, resend the same one",
+					"note": "the network executes it only once"
+				},
+				"coroutines": {
+					"title": "Parallel network waits on coroutines",
+					"note": "only nonce allocation stays sequential"
+				},
+				"reconcile": {
+					"title": "Reconciliation on start and on schedule",
+					"note": "unfinished operations get completed"
+				}
+			},
+			"result": "1000+ workers in production. A retry after a timeout never created a second transaction; restarts lost neither nonce nor state.",
+			"quote": "The point wasn’t adding workers — it was separating what can run in parallel from what can’t.",
+			"sequence": {
+				"name": "Exactly-once payout",
+				"lanes": {
+					"worker": "Worker",
+					"db": "PostgreSQL",
+					"node": "Chain node"
+				},
+				"normal": {
+					"outcome": "outcome: 1 transaction, nonce in order",
+					"steps": {
+						"allocate": "allocate nonce + sign · 1 tx",
+						"store": "store signed tx",
+						"send": "send",
+						"accepted": "accepted",
+						"done": "mark done"
+					}
+				},
+				"failure": {
+					"outcome": "timeout injected → still exactly 1 transaction",
+					"steps": {
+						"allocate": "allocate nonce + sign · 1 tx",
+						"store": "store signed tx",
+						"send": "send",
+						"timeout": "timeout · state unknown",
+						"load": "load same signed tx",
+						"resend": "re-send identical tx",
+						"known": "already known · no 2nd spend"
+					}
+				}
+			}
+		},
+		"claims": {
+			"stack": "NestJS · PostgreSQL · Redis",
+			"title": "One order, one courier — at peak hour",
+			"metric": "−86%",
+			"metric_label": "repeat claims at peak load",
+			"situation": "A free order was visible to several couriers, and at peak they accepted it almost at the same moment.",
+			"risks": {
+				"race": {
+					"cause": "Two requests read “free”",
+					"effect": "one order, two couriers"
+				},
+				"retry": {
+					"cause": "Bad network, second tap",
+					"effect": "repeat looks like a refusal"
+				},
+				"stale": {
+					"cause": "Stale list on screen",
+					"effect": "courier takes a taken order"
+				},
+				"peak": {
+					"cause": "Peak hits one DB row",
+					"effect": "load and latency grow"
+				}
+			},
+			"tasks": {
+				"single": "Exactly one courier per order",
+				"repeat": "Repeat taps handled correctly",
+				"peak": "Hold peak load"
+			},
+			"actions": {
+				"check": {
+					"title": "Check, then write",
+					"note": "a second request slipped in between"
+				},
+				"lock": {
+					"title": "Redis as the only lock",
+					"note": "keys could expire and drift from the database"
+				},
+				"conditional": {
+					"title": "Conditional write in a PostgreSQL transaction",
+					"note": "only the first request wins"
+				},
+				"idempotent": {
+					"title": "Repeat from the same courier counts as success",
+					"note": "a bad network gives no false refusal"
+				},
+				"filter": {
+					"title": "Redis as a fast filter",
+					"note": "needless requests never reach the database"
+				},
+				"push": {
+					"title": "Taken orders leave lists over WebSocket",
+					"note": "fewer taps on taken orders"
+				}
+			},
+			"result": "No more double assignments. Repeat claims at peak dropped by 86%, and a repeat tap no longer shows a false refusal.",
+			"quote": "Correctness and speed are separate concerns. The remaining 14% are taps on taken orders from a stale screen.",
+			"sequence": {
+				"name": "Order claim",
+				"lanes": {
+					"courier_a": "Courier A",
+					"courier_b": "Courier B",
+					"redis": "Redis",
+					"db": "PostgreSQL"
+				},
+				"normal": {
+					"outcome": "outcome: order assigned to courier A",
+					"steps": {
+						"free": "order free?",
+						"probably": "probably",
+						"update": "UPDATE … WHERE free",
+						"assigned": "1 row · assigned A"
+					}
+				},
+				"failure": {
+					"outcome": "race injected → still one courier",
+					"steps": {
+						"update_a": "conditional UPDATE",
+						"update_b": "same UPDATE, same ms",
+						"assigned": "1 row · assigned A",
+						"taken": "0 rows · taken",
+						"repeat": "repeat tap",
+						"success": "same courier · success"
+					}
+				}
+			}
+		},
+		"agent": {
+			"stack": "Python · RAG · LiveKit",
+			"title": "A voice agent that knows when to hand off",
+			"metric": "+32%",
+			"metric_label": "B2B campaign throughput",
+			"situation": "Support and ad-scenario preparation for B2B clients depended on people.",
+			"risks": {
+				"manual": {
+					"cause": "A person writes the scenario",
+					"effect": "campaigns start later"
+				},
+				"guess": {
+					"cause": "Model doesn’t know the data",
+					"effect": "confident, but wrong"
+				},
+				"latency": {
+					"cause": "STT → LLM → TTS in sequence",
+					"effect": "pauses break the talk"
+				},
+				"format": {
+					"cause": "Output is free text",
+					"effect": "platform can’t accept it"
+				}
+			},
+			"tasks": {
+				"grounded": "Answer from platform data",
+				"fast": "No long pauses",
+				"structured": "Scenario in a strict structure"
+			},
+			"actions": {
+				"plain": {
+					"title": "Model without retrieval",
+					"note": "it doesn’t know the platform"
+				},
+				"sequential": {
+					"title": "Sequential voice pipeline",
+					"note": "every step’s delay added up"
+				},
+				"rag": {
+					"title": "RAG with a per-client filter and confidence threshold",
+					"note": "not enough data — a person takes over"
+				},
+				"streaming": {
+					"title": "Streaming voice over LiveKit",
+					"note": "replies start early and can be interrupted"
+				},
+				"schema": {
+					"title": "Schema validation and client confirmation",
+					"note": "a model error never reaches a campaign"
+				},
+				"evals": {
+					"title": "Eval set of test questions",
+					"note": "prompt changes can’t silently degrade answers"
+				}
+			},
+			"result": "B2B campaign throughput grew by 32%. The scenario is assembled during the conversation; when data is missing, the call goes to a person.",
+			"quote": "The key was limiting where the model can be wrong. A high threshold calls a person more often — better than a confident wrong answer.",
+			"sequence": {
+				"name": "Voice agent hand-off",
+				"lanes": {
+					"client": "Client",
+					"agent": "Agent",
+					"rag": "RAG",
+					"human": "Human"
+				},
+				"normal": {
+					"outcome": "outcome: scenario confirmed by the client",
+					"steps": {
+						"brief": "spoken brief",
+						"retrieve": "retrieve · client filter",
+						"confidence": "confidence 0.86",
+						"scenario": "scenario · schema ok",
+						"confirm": "confirm"
+					}
+				},
+				"failure": {
+					"outcome": "low confidence → a person answers",
+					"steps": {
+						"brief": "spoken brief",
+						"retrieve": "retrieve · client filter",
+						"low": "confidence 0.41, below threshold",
+						"handoff": "hand off + context",
+						"answer": "answer from a person"
+					}
+				}
+			}
+		}
+	},
+	"experience": {
+		"title": "Experience",
+		"note": "8+ years in production · end-to-end ownership",
+		"groups": {
+			"reliability": {
+				"title": "Reliability and concurrency",
+				"items": {
+					"wallet": "Designed a concurrent wallet system on Python asyncio — <metric>1000+</metric> coroutine workers, nonce sequencing in PostgreSQL, idempotent retries and crash recovery.",
+					"claim": "Reworked an order-claim service with transactional logic over PostgreSQL and Redis — duplicate acceptances at peak <metric>−86%</metric>.",
+					"sync": "Built real-time balance and campaign-lifecycle sync on NestJS, gRPC and PostgreSQL — desync incidents <metric>−43%</metric>, p95 update latency <plain>under 250 ms</plain>.",
+					"orders": "Kept order workflows between ingestion and execution at <metric>99.3%</metric> reliability with reconciliation, retry policies and state validation.",
+					"drafts": "Resolved conflicts in collaborative campaign drafts with optimistic locking in PostgreSQL — inconsistencies <metric>−38%</metric>."
+				}
+			},
+			"ai": {
+				"title": "AI agents and automation",
+				"items": {
+					"voice": "Built the backend of a voice agent on RAG and LiveKit that turns a spoken brief into a validated ad scenario — campaign throughput <metric>+32%</metric>.",
+					"mcp": "Created a Python MCP server so B2B clients run routine platform tasks from their own AI tools — onboarding and support <metric>7h → 1h</metric>.",
+					"proofs": "Replaced manual proof collection with a Playwright and S3 pipeline producing screenshots and Excel reports — manual work <metric>−78%</metric>.",
+					"esign": "Shipped an e‑signature service with DocuSign and Stripe on AWS EKS — document processing from <metric>days to minutes</metric>, 99.9% SLA."
+				}
+			},
+			"architecture": {
+				"title": "Architecture and performance",
+				"items": {
+					"mfe": "Led the move from a frontend monolith to Module Federation microfrontends — release cycle <metric>−47%</metric>, production bugs <metric>−33%</metric>.",
+					"dashboard": "Optimised a real-time dashboard for <plain>1M</plain> NFT positions with WebSockets, layered caching and virtualisation — render time <metric>−64%</metric>.",
+					"deposits": "Delivered unified fiat and crypto deposits and withdrawals with MetaMask and WalletConnect — completion rate <metric>+22%</metric>.",
+					"ssr": "Moved high-traffic pages from CSR to SSR on Next.js — TTFB <metric>−31%</metric>, FCP <metric>−37%</metric>.",
+					"pwa": "Added offline mode to a courier PWA with service workers and background sync — stale balance displays <metric>−41%</metric>."
+				}
+			}
+		}
+	},
+	"about": {
+		"title": "About",
+		"note": "The path, how I work, and what I think about outside the code.",
+		"path": {
+			"title": "The path",
+			"first": "I started on the frontend and spent years there — which is why I still care how a backend decision lands on the screen. Then I moved down the stack: backends, payments, real-time systems. Now most of my time goes where distributed systems meet AI.",
+			"second": "The work I like best is the kind where a mistake is expensive: orders, money, documents. And anything people do by hand more than twice, I’d rather turn into a system."
+		},
+		"work": {
+			"title": "How I work with people and the business",
+			"items": {
+				"autonomy": {
+					"title": "Autonomy, end to end",
+					"text": "I take a direction from requirements to release on my own, and bring the hard architecture calls to the team."
+				},
+				"business": {
+					"title": "Business thinking",
+					"text": "I judge work by the number it moves — completion rate, throughput, hours saved — and care how the product makes money."
+				},
+				"writing": {
+					"title": "Decisions in writing",
+					"text": "Large tasks get decomposed, API contracts agreed up front, trade-offs written down before code."
+				},
+				"bridging": {
+					"title": "Bridging teams",
+					"text": "Aligning frontend, backend and product; at home in distributed, async, international teams."
+				}
+			}
+		},
+		"outside": {
+			"title": "Outside the code",
+			"items": {
+				"psychology": {
+					"title": "Psychology",
+					"text": "cognitive biases and how people actually make decisions."
+				},
+				"systems": {
+					"title": "Systems thinking",
+					"text": "philosophy and the hidden dependencies in social systems."
+				},
+				"products": {
+					"title": "Building products",
+					"text": "small AI-first products of my own, end to end."
+				}
+			}
+		}
+	},
+	"build": {
+		"title": "How I build",
+		"note": "AI agents write a lot of my code — inside a harness I assembled from open-source tools, so the result is checked by the system rather than by hope. Spec first, tests first, rules enforced before commit.",
+		"harness_title": "The harness — the wrapper I build around coding agents",
+		"harness_label": "My AI development harness",
+		"steps": {
+			"spec": {
+				"title": "Spec",
+				"text": "Spec-driven development: the change is agreed before code"
+			},
+			"context": {
+				"title": "Context",
+				"text": "The agent sees the real structure, not guesses"
+			},
+			"tests": {
+				"title": "Tests first",
+				"text": "Behaviour pinned down before implementation"
+			},
+			"guardrails": {
+				"title": "Guardrails",
+				"text": "Architecture rules checked before commit"
+			},
+			"memory": {
+				"title": "Memory",
+				"text": "Decisions and patterns carried to the next session"
+			}
+		},
+		"stack": {
+			"systems": "Systems",
+			"backend": "Backend",
+			"data": "Data",
+			"ai": "AI",
+			"harness": "Harness",
+			"frontend": "Frontend and mobile",
+			"integrations": "Integrations and automation",
+			"infrastructure": "Infrastructure"
+		}
+	},
+	"contact": {
+		"title": "Open to Senior Software Engineer and AI Engineer roles.",
+		"lede": "Remote, product companies with real server-side complexity — where reliability or AI decides the outcome.",
+		"email_cta": "Email me",
+		"linkedin_cta": "LinkedIn",
+		"labels": {
+			"email": "Email",
+			"telegram": "Telegram",
+			"linkedin": "LinkedIn",
+			"github": "GitHub"
+		},
+		"copy": "Copy",
+		"copied": "Copied"
+	}
+}

@@ -1,0 +1,37 @@
+{
+	"seo": {
+		"title": "Дамир Каримов — Senior Software Engineer",
+		"description": "Senior software engineer: распределённые системы, платежи, данные в реальном времени и AI-агенты. Проектирую с пути отказа.",
+		"keywords": "Дамир Каримов, senior software engineer, AI-инженер, распределённые системы, платежи, AI-агенты, RAG, MCP, Node.js, NestJS, Python, TypeScript, React, Next.js, PostgreSQL"
+	},
+	"brand": "damir-karimov.com",
+	"nav": {
+		"label": "Разделы",
+		"capabilities": "Что я делаю",
+		"cases": "Кейсы",
+		"experience": "Опыт",
+		"about": "Обо мне",
+		"build": "Как я работаю",
+		"contact": "Контакты"
+	},
+	"footer": {
+		"copyright": "© {year} Дамир Каримов",
+		"timezone": "UTC+5"
+	},
+	"theme_toggle": {
+		"label": "Переключить тему"
+	},
+	"language_toggle": {
+		"label": "Язык"
+	},
+	"og": {
+		"title": "Инженер для системы, где нельзя ошибиться",
+		"accent": "дважды.",
+		"role": "Senior Software Engineer · распределённые системы, платежи, AI-агенты",
+		"alt": "Дамир Каримов — Senior Software Engineer"
+	},
+	"person": {
+		"name": "Дамир Каримов",
+		"job_title": "Senior Software Engineer"
+	}
+}

@@ -1,0 +1,37 @@
+{
+	"seo": {
+		"title": "Damir Karimov — Senior Software Engineer",
+		"description": "Senior software engineer: distributed systems, payments, real-time data and AI agents. Designing from the failure path first.",
+		"keywords": "Damir Karimov, senior software engineer, AI engineer, distributed systems, payments, AI agents, RAG, MCP, Node.js, NestJS, Python, TypeScript, React, Next.js, PostgreSQL"
+	},
+	"brand": "damir-karimov.com",
+	"nav": {
+		"label": "Sections",
+		"capabilities": "What I build",
+		"cases": "Cases",
+		"experience": "Experience",
+		"about": "About",
+		"build": "How I build",
+		"contact": "Contact"
+	},
+	"footer": {
+		"copyright": "© {year} Damir Karimov",
+		"timezone": "UTC+5"
+	},
+	"theme_toggle": {
+		"label": "Toggle theme"
+	},
+	"language_toggle": {
+		"label": "Language"
+	},
+	"og": {
+		"title": "Software engineer for the parts that can’t go",
+		"accent": "wrong twice.",
+		"role": "Senior Software Engineer · distributed systems, payments, AI agents",
+		"alt": "Damir Karimov — Senior Software Engineer"
+	},
+	"person": {
+		"name": "Damir Karimov",
+		"job_title": "Senior Software Engineer"
+	}
+}

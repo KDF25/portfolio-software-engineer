@@ -1,0 +1,10 @@
+.next
+out
+build
+node_modules
+public
+package-lock.json
+next-env.d.ts
+tsconfig.json
+AGENTS.md
+CLAUDE.md
