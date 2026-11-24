@@ -55,6 +55,7 @@ export default defineConfig([
 		"out/**",
 		"build/**",
 		"node_modules/**",
+		".vercel/**",
 		"next-env.d.ts",
 		"src/shared/api/generated/**"
 	]),
