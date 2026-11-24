@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -150,6 +151,7 @@ export default async function LocaleLayout({ children, params }: TLayoutProps) {
 					<Footer />
 				</Providers>
 				<GoogleAnalytics />
+				<Analytics />
 			</body>
 		</html>
 	);
